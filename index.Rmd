@@ -1,5 +1,5 @@
 ---
-title: "Untitled"
+title: "Dashboard"
 output: 
   flexdashboard::flex_dashboard:
     orientation: columns
@@ -8,18 +8,71 @@ output:
 
 ```{r setup, include=FALSE}
 library(flexdashboard)
+library(dplyr)
+pt_data <- read.csv("https://raw.githubusercontent.com/dssg-pt/covid19pt-data/master/data.csv")
+```
+```{r}
+pt_data$data <- as.Date(pt_data$data,format = "%d-%m-%Y")
+updated_on <- max(pt_data$data)
+pt_data_total <- pt_data %>% filter(data == updated_on)
 ```
 
-Column {data-width=650}
+Summary {data-icon="ion-stats-bars"}
+=====================================
+
+Column {data-width=150}
 -----------------------------------------------------------------------
 
-### Chart A
+### Confirmed cases {.value-box}
 
 ```{r}
-
+valueBox(pt_data_total$confirmados,
+         icon = "fas fa-plus-circle")
 ```
 
-Column {data-width=350}
+### Active cases {.value-box}
+
+```{r}
+valueBox(pt_data_total$ativos,
+         icon = "fas fa-plus-circle")
+```
+
+### New cases {.value-box}
+
+```{r}
+valueBox(pt_data_total$confirmados_novos,
+         icon = "fas fa-plus-circle")
+```
+
+### Recovered cases {.value-box}
+
+```{r}
+valueBox(pt_data_total$recuperados,
+         icon = "fas fa-plus-circle")
+```
+
+### Hospitalized {.value-box}
+
+```{r}
+valueBox(pt_data_total$internados,
+         icon = "fas fa-plus-circle")
+```
+
+### Intensive Care {.value-box}
+
+```{r}
+valueBox(pt_data_total$internados_uci,
+         icon = "fas fa-plus-circle")
+```
+
+### Deatch cases {.value-box}
+
+```{r}
+valueBox(pt_data_total$obitos,
+         icon = "fas fa-plus-circle")
+```
+
+Column {data-width=425}
 -----------------------------------------------------------------------
 
 ### Chart B
@@ -28,10 +81,8 @@ Column {data-width=350}
 
 ```
 
-### Chart C
-
-```{r}
-
-```
+Map {data-icon="far fa-map"}
+=====================================
 
 
+a

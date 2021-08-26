@@ -8,9 +8,9 @@
 
 
 
-<title>Untitled</title>
+<title>Dashboard</title>
 
-<meta property="og:title" content="Untitled" />
+<meta property="og:title" content="Dashboard" />
 
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no' />
 
@@ -28,6 +28,9 @@ window.FlexDashboardComponents = [];
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
 <script src="site_libs/stickytableheaders-0.1.19/jquery.stickytableheaders.min.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+<link href="site_libs/ionicons-2.0.1/css/ionicons.min.css" rel="stylesheet" />
 <style type="text/css">
 
 /*
@@ -805,7 +808,7 @@ html, body {
   
 </span>
 <span class="navbar-brand">
-  Untitled
+  Dashboard
   <span class="navbar-author">
         </span>
 </span>
@@ -2612,16 +2615,64 @@ window.FlexDashboardComponents.push({
 
 <div id="dashboard-container">
 
-<div id="column" class="section level2" data-width="650">
-<h2>Column</h2>
-<div id="chart-a" class="section level3">
-<h3>Chart A</h3>
 <div class="knitr-options" data-fig-width="576" data-fig-height="460">
 
 </div>
+<div id="summary" class="section level1" data-icon="ion-stats-bars">
+<h1>Summary</h1>
+<div id="column" class="section level2" data-width="150">
+<h2>Column</h2>
+<div id="confirmed-cases" class="section level3 value-box">
+<h3>Confirmed cases</h3>
+<div class="knitr-options" data-fig-width="576" data-fig-height="460">
+
+</div>
+<span class="value-output" data-icon="fas fa-plus-circle">1028421</span>
+</div>
+<div id="active-cases" class="section level3 value-box">
+<h3>Active cases</h3>
+<div class="knitr-options" data-fig-width="576" data-fig-height="460">
+
+</div>
+<span class="value-output" data-icon="fas fa-plus-circle">45408</span>
+</div>
+<div id="new-cases" class="section level3 value-box">
+<h3>New cases</h3>
+<div class="knitr-options" data-fig-width="576" data-fig-height="460">
+
+</div>
+<span class="value-output" data-icon="fas fa-plus-circle">2552</span>
+</div>
+<div id="recovered-cases" class="section level3 value-box">
+<h3>Recovered cases</h3>
+<div class="knitr-options" data-fig-width="576" data-fig-height="460">
+
+</div>
+<span class="value-output" data-icon="fas fa-plus-circle">965324</span>
+</div>
+<div id="hospitalized" class="section level3 value-box">
+<h3>Hospitalized</h3>
+<div class="knitr-options" data-fig-width="576" data-fig-height="460">
+
+</div>
+<span class="value-output" data-icon="fas fa-plus-circle">670</span>
+</div>
+<div id="intensive-care" class="section level3 value-box">
+<h3>Intensive Care</h3>
+<div class="knitr-options" data-fig-width="576" data-fig-height="460">
+
+</div>
+<span class="value-output" data-icon="fas fa-plus-circle">150</span>
+</div>
+<div id="deatch-cases" class="section level3 value-box">
+<h3>Deatch cases</h3>
+<div class="knitr-options" data-fig-width="576" data-fig-height="460">
+
+</div>
+<span class="value-output" data-icon="fas fa-plus-circle">17689</span>
 </div>
 </div>
-<div id="column-1" class="section level2" data-width="350">
+<div id="column-1" class="section level2" data-width="425">
 <h2>Column</h2>
 <div id="chart-b" class="section level3">
 <h3>Chart B</h3>
@@ -2629,12 +2680,11 @@ window.FlexDashboardComponents.push({
 
 </div>
 </div>
-<div id="chart-c" class="section level3">
-<h3>Chart C</h3>
-<div class="knitr-options" data-fig-width="576" data-fig-height="460">
-
 </div>
 </div>
+<div id="map" class="section level1" data-icon="far fa-map">
+<h1>Map</h1>
+<p>a</p>
 </div>
 
 </div>
