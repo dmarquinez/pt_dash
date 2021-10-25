@@ -13,6 +13,7 @@ library(dplyr)
 library(ggplot2)
 library(plotly)
 library(plyr)
+library(reshape2)
 pt_data <- read.csv("https://raw.githubusercontent.com/dssg-pt/covid19pt-data/master/data.csv")
 htmltools::tagList(fontawesome::fa_html_dependency())
 
@@ -41,41 +42,41 @@ valueBox(pt_data_total$confirmados,
 
 ```{r}
 valueBox(pt_data_total$ativos,
-         icon = "fas fa-user-md")
+         icon = "fas fa-user-md",color = "#50CB86")
 ```
 
 ### New cases {.value-box}
 
 ```{r}
 valueBox(pt_data_total$confirmados_novos,
-         icon = "fas fa-star-of-life")
+         icon = "fas fa-star-of-life", color = "#dda15e")
 ```
 
 ### Recovered cases {.value-box}
 
 ```{r}
 valueBox(pt_data_total$recuperados,
-         icon = "fas fa-heartbeat")
+         icon = "fas fa-heartbeat", color = "#a8dadc")
 ```
 
 ### Hospitalized {.value-box}
 
 ```{r}
 valueBox(pt_data_total$internados,
-         icon = "fas fa-hospital")
+         icon = "fas fa-hospital",color = "#F0E68C")
 ```
 
 ### Intensive Care {.value-box}
 
 ```{r}
 valueBox(pt_data_total$internados_uci,
-         icon = "fas fa-procedures")
+         icon = "fas fa-procedures",color = "#FA8072")
 ```
 
 ### Death cases {.value-box}
 
 ```{r}
-valueBox(pt_data_total$obitos)
+valueBox(pt_data_total$obitos, color = "#264653")
 ```
 
 
@@ -97,9 +98,40 @@ ggplotly(p)
 ### Hospitalized
 
 ```{r}
-p <- ggplot(pt_data, aes(x=data, y=internados)) +
-            geom_line()
-ggplotly(p)
+#p <- ggplot(pt_data, aes(x=data, y=internados)) +
+#            geom_line()
+#ggplotly(p)
+fig <- plot_ly()
+
+fig <- fig %>% add_trace(data = pt_data, x = ~ data, y = ~internados, name = "Hospitalized", mode = "lines", type = "scatter", line=list(color="#F5FF8D"))
+
+ay <- list(
+  tickfont = list(color = "black"),
+  overlaying = "y",
+  side = "right",
+  title = "Intensive Care")
+
+fig <- fig %>% add_trace(data = pt_data, x = ~ data, y = ~ internados_uci, name = "Intensive Care", yaxis = "y2", mode = "lines", type = "scatter",
+                         line=list(colot="#FA8072"))
+
+# Set figure title, x and y-axes titles
+fig <- fig %>% layout(
+  yaxis2 = ay,
+  xaxis = list(title=""),
+  yaxis = list(title="Hospitalized")
+)%>%
+  layout(plot_bgcolor='#e5ecf6',
+          xaxis = list(
+            zerolinecolor = '#ffff',
+            zerolinewidth = 2,
+            gridcolor = 'ffff'),
+          yaxis = list(
+            zerolinecolor = '#ffff',
+            zerolinewidth = 2,
+            gridcolor = 'ffff')
+          )
+
+fig
 ```
 
 Column {data-width=425}
@@ -121,8 +153,28 @@ p <- ggplot(pt_data, aes(x=data, y=internados_uci)) +
 ggplotly(p)
 ```
 
+
 Map {data-icon="far fa-map"}
 =====================================
+
+### Distribution
+```{r}
+new_data <- subset(pt_data, select = c(data,ativos,internados,internados_uci))
+new_data[is.na(new_data)] <- 0
+new_data_m <- melt(new_data, id.vars = c("data"))
+new <- new_data_m  %>%
+  group_by(data,variable) %>%
+  mutate(percentage = value / sum(value))
+
+p <- ggplot(new, aes(x=data, y=percentage, fill=variable)) + 
+    geom_area(alpha=0.6 , size=1)
+
+#ggplotly(p)
+fig <- plot_ly(pt_data, x = ~data, y = ~ativos, name = 'Active Cases', type = 'scatter', mode = 'none', stackgroup = 'one', groupnorm = 'percent', fillcolor = '#50CB86')
+fig <- fig %>% add_trace(y = ~internados, name = 'Hospitalized', fillcolor = '#F5FF8D')
+fig <- fig %>% add_trace(y = ~internados_uci, name = 'Intensive Care', fillcolor = '#FA8072')
+fig
+```
 
 
 a
