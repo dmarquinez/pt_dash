@@ -2,6 +2,7 @@
 title: "Dashboard"
 output: 
   flexdashboard::flex_dashboard:
+    source_code: embed
     orientation: columns
     vertical_layout: fill
 ---
@@ -9,6 +10,9 @@ output:
 ```{r setup, include=FALSE}
 library(flexdashboard)
 library(dplyr)
+library(ggplot2)
+library(plotly)
+library(plyr)
 pt_data <- read.csv("https://raw.githubusercontent.com/dssg-pt/covid19pt-data/master/data.csv")
 htmltools::tagList(fontawesome::fa_html_dependency())
 
@@ -23,7 +27,7 @@ pt_data_total <- pt_data %>% filter(data == updated_on)
 Summary {data-icon="ion-stats-bars"}
 =====================================
 
-Column {data-width=150}
+Column {data-width=200}
 -----------------------------------------------------------------------
 
 ### Confirmed cases {.value-box}
@@ -74,13 +78,47 @@ valueBox(pt_data_total$internados_uci,
 valueBox(pt_data_total$obitos)
 ```
 
+
 Column {data-width=425}
 -----------------------------------------------------------------------
 
-### Chart B
+
+### Active Cases Trend
 
 ```{r}
+p <- ggplot(pt_data, aes(x=data, y=ativos)) +
+            geom_line()
+ggplotly(p)
+#plotly::plot_ly(data = pt_data,
+#                x = ~ data,
+#                y = ~ ativos)
+```
 
+### Hospitalized
+
+```{r}
+p <- ggplot(pt_data, aes(x=data, y=internados)) +
+            geom_line()
+ggplotly(p)
+```
+
+Column {data-width=425}
+-----------------------------------------------------------------------
+
+### New cases
+
+```{r}
+p <- ggplot(pt_data, aes(x=data, y=confirmados_novos)) +
+            geom_line()
+ggplotly(p)
+```
+
+### Intensive care
+
+```{r}
+p <- ggplot(pt_data, aes(x=data, y=internados_uci)) +
+            geom_line()
+ggplotly(p)
 ```
 
 Map {data-icon="far fa-map"}
