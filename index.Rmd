@@ -10,11 +10,14 @@ output:
 library(flexdashboard)
 library(dplyr)
 pt_data <- read.csv("https://raw.githubusercontent.com/dssg-pt/covid19pt-data/master/data.csv")
+htmltools::tagList(fontawesome::fa_html_dependency())
+
 ```
 ```{r}
 pt_data$data <- as.Date(pt_data$data,format = "%d-%m-%Y")
 updated_on <- max(pt_data$data)
 pt_data_total <- pt_data %>% filter(data == updated_on)
+
 ```
 
 Summary {data-icon="ion-stats-bars"}
@@ -34,42 +37,41 @@ valueBox(pt_data_total$confirmados,
 
 ```{r}
 valueBox(pt_data_total$ativos,
-         icon = "fas fa-plus-circle")
+         icon = "fas fa-user-md")
 ```
 
 ### New cases {.value-box}
 
 ```{r}
 valueBox(pt_data_total$confirmados_novos,
-         icon = "fas fa-plus-circle")
+         icon = "fas fa-star-of-life")
 ```
 
 ### Recovered cases {.value-box}
 
 ```{r}
 valueBox(pt_data_total$recuperados,
-         icon = "fas fa-plus-circle")
+         icon = "fas fa-heartbeat")
 ```
 
 ### Hospitalized {.value-box}
 
 ```{r}
 valueBox(pt_data_total$internados,
-         icon = "fas fa-plus-circle")
+         icon = "fas fa-hospital")
 ```
 
 ### Intensive Care {.value-box}
 
 ```{r}
 valueBox(pt_data_total$internados_uci,
-         icon = "fas fa-plus-circle")
+         icon = "fas fa-procedures")
 ```
 
-### Deatch cases {.value-box}
+### Death cases {.value-box}
 
 ```{r}
-valueBox(pt_data_total$obitos,
-         icon = "fas fa-plus-circle")
+valueBox(pt_data_total$obitos)
 ```
 
 Column {data-width=425}
